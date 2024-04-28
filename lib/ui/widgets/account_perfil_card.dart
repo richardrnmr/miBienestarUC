@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class AccountPerfilCard extends StatelessWidget {
@@ -14,11 +12,9 @@ class AccountPerfilCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
       ),
       color: Colors.white,
-      elevation:
-          2, // Ajusta el nivel de elevación según sea necesario
+      elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            vertical: 6, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -29,10 +25,8 @@ class AccountPerfilCard extends StatelessWidget {
             SizedBox(width: 16),
             Text(
               'Hola, Jordan! 👋',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(fontSize: 14),
+              style:
+                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14),
             ),
           ],
         ),
