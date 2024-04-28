@@ -17,7 +17,7 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController password2Controller = TextEditingController();
   final TextEditingController ageController = TextEditingController();
-  final String genderController = 'Genero';
+  final TextEditingController genderController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -121,7 +121,7 @@ class RegisterPage extends StatelessWidget {
                                 password: passwordController.text,
                                 id: int.parse(idController.text),
                                 age: int.parse(ageController.text),
-                                gender: genderController,
+                                gender: genderController.text,
                                 context: context,
                               );
                             }
