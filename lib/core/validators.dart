@@ -33,7 +33,7 @@ class PersonalizedValidators {
 
   static String? age(String? value) {
   if (value == null || value.isEmpty) {
-    return 'Por favor, ingrese su edad';
+    return 'Edad requerida';
   }
   final age = int.tryParse(value);
   if (age == null || age < 10 || age > 99) {

@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mi_bienestar_uc/models/hospital.dart';
+import 'package:mi_bienestar_uc/models/user_patient.dart';
 import 'package:mi_bienestar_uc/pages/home_page.dart';
+import 'package:mi_bienestar_uc/pages/login_page.dart';
 
 class FirebaseHelper {
   static Future<void> signInWithEmailAndPassword({
@@ -11,14 +14,17 @@ class FirebaseHelper {
     required BuildContext context,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       // Navega a la pantalla HomePage si la autenticación es exitosa
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(
+          builder: (context) => HomePage(userId: userCredential.user!.uid),
+        ),
         (route) => false,
       );
     } catch (e) {
@@ -47,7 +53,7 @@ class FirebaseHelper {
   static Future<void> registerWithEmailAndPassword({
     required String email,
     required String password,
-    required int id,
+    required String name,
     required int age,
     required String gender,
     required BuildContext context,
@@ -61,15 +67,18 @@ class FirebaseHelper {
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       await firestore.collection('users').doc(userCredential.user!.uid).set({
         'email': email,
-        'id': id,
+        'name': name,
         'age': age,
         'gender': gender,
+        'id': userCredential.user!.uid,
       });
 
       // Navegar a la pantalla HomePage si el registro es exitoso
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(
+          builder: (context) => HomePage(userId: userCredential.user!.uid),
+        ),
         (route) => false,
       );
     } catch (e) {
@@ -118,6 +127,72 @@ class FirebaseHelper {
           );
         },
       );
+    }
+  }
+
+  static Future<bool> checkAuth() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    User? user = _auth.currentUser;
+    return user != null;
+  }
+
+  static Future<void> signOut(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } catch (e) {
+      print('Error al cerrar sesión: $e');
+    }
+  }
+
+  static Future<UserPatient?> getUserData(String id) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    QuerySnapshot querySnapshot = await users.where('id', isEqualTo: id).get();
+
+    // Si no se encuentra ningún documento, devuelve null
+    if (querySnapshot.docs.isEmpty) {
+      return null;
+    }
+
+    // Si se encuentra un documento, devuelve el primer documento encontrado
+    var doc = querySnapshot.docs.first;
+
+    return UserPatient(
+      email: doc['email'],
+      name: doc['name'],
+      id: doc['id'],
+      gender: doc['gender'],
+      age: doc['age'],
+    );
+  }
+
+  static Future<List<Hospital>> obtenerHospitales() async {
+    try {
+      // Obtener una referencia a la colección 'hospitals'
+      CollectionReference hospitals =
+          FirebaseFirestore.instance.collection('hospitals');
+
+      // Obtener todos los documentos de la colección
+      QuerySnapshot querySnapshot = await hospitals.get();
+
+      // Convertir los documentos en objetos Hospital y almacenarlos en una lista
+      List<Hospital> listaHospitales = querySnapshot.docs.map((doc) {
+        return Hospital(
+          name: doc['name'],
+          address: doc['address'],
+          phone: doc['phone'],
+        );
+      }).toList();
+
+      return listaHospitales;
+    } catch (e) {
+      // Manejar errores
+      print('Error al obtener los hospitales: $e');
+      return []; // Devolver una lista vacía en caso de error
     }
   }
 }

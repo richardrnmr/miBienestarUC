@@ -13,7 +13,7 @@ class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
 
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController idController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController password2Controller = TextEditingController();
   final TextEditingController ageController = TextEditingController();
@@ -66,10 +66,10 @@ class RegisterPage extends StatelessWidget {
                         ),
                         SizedBox(height: 24),
                         EditedTextFormField(
-                          hintText: 'Ingrese DNI o carnet de extranjería',
-                          controller: idController,
-                          validator: PersonalizedValidators.number,
-                          textInputType: TextInputType.number,
+                          hintText: 'Ingrese nombre completo',
+                          controller: nameController,
+                          validator: PersonalizedValidators.text,
+                          textInputType: TextInputType.text,
                         ),
                         SizedBox(height: 24),
                         EditedTextFormField(
@@ -119,7 +119,7 @@ class RegisterPage extends StatelessWidget {
                               await FirebaseHelper.registerWithEmailAndPassword(
                                 email: emailController.text,
                                 password: passwordController.text,
-                                id: int.parse(idController.text),
+                                name: nameController.text,
                                 age: int.parse(ageController.text),
                                 gender: genderController.text,
                                 context: context,
