@@ -64,11 +64,11 @@ class _SymptomsPageState extends State<SymptomsPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: EditedTextArea(
-                      enableText: !isLoading,
-                      hintText: 'Por ejemplo: Tengo fiebre, tos, etc.',
-                      controller: symptomsController,
-                      validator: PersonalizedValidators.text,
-                    ),
+                        enableText: !isLoading,
+                        hintText: 'Por ejemplo: Tengo fiebre, tos, etc.',
+                        controller: symptomsController,
+                        validator: PersonalizedValidators.text,
+                        colorbside: Color(0xFFD6C731)),
                   ),
                   GlobalEditedButton(
                     width: MediaQuery.of(context).size.width,

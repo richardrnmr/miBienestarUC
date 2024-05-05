@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
+import 'package:mi_bienestar_uc/models/hospital.dart';
+import 'package:mi_bienestar_uc/ui/general/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelpPage extends StatelessWidget {
@@ -10,45 +12,42 @@ class HelpPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Text(
-                'NÚMEROS DE AYUDA',
+                'NÚMEROS DE\nAYUDA',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontSize: 36,
                     ),
               ),
             ),
             Expanded(
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('hospitals')
-                    .snapshots(),
+              child: FutureBuilder<List<Hospital>>(
+                future: FirebaseHelper.getHospitals(),
                 builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  }
-
+                    AsyncSnapshot<List<Hospital>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
                   }
 
-                  // Construye la lista utilizando los datos de Firestore
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
                   return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      var hospitalData = snapshot.data!.docs[index];
+                      var hospital = snapshot.data![index];
                       return _buildHospitalListItem(
                         context,
-                        hospitalData['name'],
-                        hospitalData['address'],
-                        hospitalData['phone'],
+                        hospital.name,
+                        hospital.address,
+                        hospital.phone,
                       );
                     },
                   );
@@ -58,6 +57,24 @@ class HelpPage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          elevation: 1,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          backgroundColor: AppColor.blackparcialColor,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 

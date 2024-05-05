@@ -6,6 +6,7 @@ import 'package:mi_bienestar_uc/models/hospital.dart';
 import 'package:mi_bienestar_uc/models/user_patient.dart';
 import 'package:mi_bienestar_uc/pages/home_page.dart';
 import 'package:mi_bienestar_uc/pages/login_page.dart';
+import 'package:mi_bienestar_uc/ui/widgets/custom_show_dialog.dart';
 
 class FirebaseHelper {
   static Future<void> signInWithEmailAndPassword({
@@ -30,22 +31,13 @@ class FirebaseHelper {
     } catch (e) {
       // Muestra un cuadro de diálogo con el mensaje de error
       print('Error de autenticación: $e');
-      showDialog(
+      showCustomDialog(
+        title: 'Error de autenticación',
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error de autenticación'),
-            content: Text('Usuario o contraseña incorrectos.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Cerrar'),
-              ),
-            ],
-          );
-        },
+        message: 'Usuario o contraseña incorrectos',
+        onAccept: (){
+          Navigator.pop(context);
+        }
       );
     }
   }
@@ -73,13 +65,20 @@ class FirebaseHelper {
         'id': userCredential.user!.uid,
       });
 
-      // Navegar a la pantalla HomePage si el registro es exitoso
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(userId: userCredential.user!.uid),
-        ),
-        (route) => false,
+      showCustomDialog(
+        title: 'Confirmación',
+        context: context,
+        message: 'Registrado exitosamente exitosamente',
+        onAccept: () {
+          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(userId: userCredential.user!.uid),
+            ),
+            (route) => false,
+          );
+        },
       );
     } catch (e) {
       print('Error de registro: $e');
@@ -170,7 +169,7 @@ class FirebaseHelper {
     );
   }
 
-  static Future<List<Hospital>> obtenerHospitales() async {
+  static Future<List<Hospital>> getHospitals() async {
     try {
       // Obtener una referencia a la colección 'hospitals'
       CollectionReference hospitals =
@@ -193,6 +192,26 @@ class FirebaseHelper {
       // Manejar errores
       print('Error al obtener los hospitales: $e');
       return []; // Devolver una lista vacía en caso de error
+    }
+  }
+
+  static Future<void> postProblem({
+    required String reason,
+    required String detail,
+  }) async {
+    try {
+      // Obtener una referencia a la colección 'problems'
+      CollectionReference problems =
+          FirebaseFirestore.instance.collection('problems');
+
+      // Subir un nuevo documento con los campos reason y detail
+      await problems.add({
+        'reason': reason,
+        'detail': detail,
+      });
+    } catch (e) {
+      // Manejar errores
+      print('Error al subir el problema: $e');
     }
   }
 }

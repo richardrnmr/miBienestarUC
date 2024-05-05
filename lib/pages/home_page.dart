@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
 import 'package:mi_bienestar_uc/pages/help_page.dart';
+import 'package:mi_bienestar_uc/pages/report_problem_page.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
 import 'package:mi_bienestar_uc/ui/widgets/account_perfil_card.dart';
 import 'package:mi_bienestar_uc/ui/widgets/actions_button.dart';
@@ -92,7 +93,14 @@ class HomePage extends StatelessWidget {
                     text: 'NÚMEROS DE AYUDA'),
                 SizedBox(height: 16),
                 ActionsButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReportProblemPage(),
+                        ),
+                      );
+                    },
                     svgPicture: 'problem_image.svg',
                     colorSvg: Colors.red,
                     text: 'REPORTAR PROBLEMA'),

@@ -17,7 +17,7 @@ class DiseasesDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'detalles',
+          'Detalles',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         backgroundColor: AppColor.skyPastelColor,
@@ -25,18 +25,22 @@ class DiseasesDetailsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
-              title.toUpperCase(),
-              style:
-                  Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 24),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                title.toUpperCase(),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineLarge
+                    ?.copyWith(fontSize: 24),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Text(
                 summary,
                 textAlign: TextAlign.justify,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                ),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
               ),
             ),
           ],

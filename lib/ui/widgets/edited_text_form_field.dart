@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_bienestar_uc/ui/general/colors.dart';
 
 class EditedTextFormField extends StatefulWidget {
   final TextEditingController? controller;
@@ -6,12 +7,14 @@ class EditedTextFormField extends StatefulWidget {
   final String hintText;
   final TextInputType? textInputType;
   final bool? isPassword;
+  final FocusNode? focusNode;
 
   const EditedTextFormField({
     super.key,
     required this.hintText,
     this.controller,
     this.validator,
+    this.focusNode,
     this.textInputType = TextInputType.text,
     this.isPassword = false,
   });
@@ -26,11 +29,12 @@ class _EditedTextFormFieldState extends State<EditedTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: widget.focusNode,
       keyboardType: widget.textInputType,
       controller: widget.controller,
       validator: widget.validator,
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 14),
-      obscureText:widget.isPassword! ? _obscureText : !_obscureText,
+      obscureText: widget.isPassword! ? _obscureText : !_obscureText,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
@@ -52,6 +56,12 @@ class _EditedTextFormFieldState extends State<EditedTextFormField> {
                 },
               )
             : null,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: AppColor
+                  .skyblueColor), // Cambia el color del borde al tener el foco
+          borderRadius: BorderRadius.circular(16.0),
+        ),
       ),
     );
   }

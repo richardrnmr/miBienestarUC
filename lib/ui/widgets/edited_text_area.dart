@@ -5,14 +5,20 @@ class EditedTextArea extends StatefulWidget {
   final String? Function(String?)? validator;
   final String hintText;
   final TextInputType? textInputType;
+  final Color colorbside;
   final bool enableText;
+  final FocusNode? focusNode;
+  int? minLines = 1;
 
-  const EditedTextArea({
+  EditedTextArea({
     Key? key,
     required this.hintText,
     required this.enableText,
     this.controller,
     this.validator,
+    this.focusNode,
+    this.minLines,
+    required this.colorbside,
     this.textInputType = TextInputType.multiline,
   }) : super(key: key);
 
@@ -27,12 +33,11 @@ class _EditedTextAreaState extends State<EditedTextArea> {
       keyboardType: widget.textInputType,
       controller: widget.controller,
       validator: widget.validator,
+      minLines: widget.minLines,
+      focusNode: widget.focusNode,
       maxLines: null,
       enabled: widget.enableText,
-      style: Theme.of(context)
-          .textTheme
-          .bodyLarge
-          ?.copyWith(fontSize: 14),
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 14),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
@@ -44,8 +49,8 @@ class _EditedTextAreaState extends State<EditedTextArea> {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-              color: Color(
-                  0xFFD6C731)), // Cambia el color del borde al tener el foco
+              color: widget
+                  .colorbside), // Cambia el color del borde al tener el foco
           borderRadius: BorderRadius.circular(16.0),
         ),
       ),
