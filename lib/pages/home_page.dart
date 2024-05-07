@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
+import 'package:mi_bienestar_uc/pages/symptoms_apimedic_page.dart';
 import 'package:mi_bienestar_uc/pages/help_page.dart';
 import 'package:mi_bienestar_uc/pages/report_problem_page.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
@@ -97,7 +98,8 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ReportProblemPage(),
+                          builder: (context) =>
+                              SymptomsApimedicPage(userId: userId),
                         ),
                       );
                     },
