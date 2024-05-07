@@ -4,6 +4,8 @@ import 'package:mi_bienestar_uc/pages/instructions_page.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
 
 class InstructionsCard extends StatelessWidget {
+  const InstructionsCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -44,9 +46,9 @@ class InstructionsCard extends StatelessWidget {
                 'assets/instructions_image.svg',
                 cacheColorFilter: true,
                 height: 24,
-                color: Color(0xFF9568F4),
+                color: const Color(0xFF9568F4),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Text('VER INSTRUCCIONES',
                   style: Theme.of(context)
                       .textTheme

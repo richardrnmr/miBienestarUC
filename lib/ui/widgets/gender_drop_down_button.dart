@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class GenderDropDown extends StatefulWidget {
   final String? Function(String?)? validator;
@@ -30,23 +29,23 @@ class _GenderDropDownState extends State<GenderDropDown> {
       value: 'Genero',
       validator: widget.validator,
       icon: const Icon(Icons.arrow_drop_down),
-      style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 14),
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 14),
       items: [
-        DropdownMenuItem(
-          child: Text('Genero'),
+        const DropdownMenuItem(
           value: 'Genero',
+          child: Text('Genero'),
         ),
-        DropdownMenuItem(
-          child: Text('Masculino'),
+        const DropdownMenuItem(
           value: 'Masculino',
+          child: Text('Masculino'),
         ),
-        DropdownMenuItem(
-          child: Text('Femenino'),
+        const DropdownMenuItem(
           value: 'Femenino',
+          child: Text('Femenino'),
         ),
-        DropdownMenuItem(
-          child: Text('Otro'),
+        const DropdownMenuItem(
           value: 'Otro',
+          child: Text('Otro'),
         ),
       ],
       onChanged: (value) {

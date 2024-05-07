@@ -30,13 +30,13 @@ class MyApp extends StatelessWidget {
         future: FirebaseHelper.checkAuth(),
         builder: (context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else {
             if (snapshot.data == true) {
               String userId = FirebaseAuth.instance.currentUser!.uid;
               return HomePage(userId: userId);
             } else {
-              return IntroPage();
+              return const IntroPage();
             }
           }
         },

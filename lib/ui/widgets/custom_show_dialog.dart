@@ -6,12 +6,12 @@ class CustomShowDialog extends StatelessWidget {
   final Function? onAccept;
   final Function? onCancel;
 
-  CustomShowDialog({
+  const CustomShowDialog({
+    super.key,
     required this.message,
     required this.title,
     this.onAccept,
     this.onCancel,
-    
   });
 
   @override
@@ -30,14 +30,14 @@ class CustomShowDialog extends StatelessWidget {
               Navigator.of(context).pop();
               if (onCancel != null) onCancel!();
             },
-            child: Text('Cancelar'),
+            child: const Text('Cancelar'),
           ),
         if (onAccept != null)
           TextButton(
             onPressed: () {
               if (onAccept != null) onAccept!();
             },
-            child: Text('Aceptar'),
+            child: const Text('Aceptar'),
           ),
       ],
     );

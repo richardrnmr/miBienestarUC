@@ -10,7 +10,7 @@ class GlobalEditedButton extends StatelessWidget {
   final double height; 
 
   const GlobalEditedButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     required this.color,
@@ -18,7 +18,7 @@ class GlobalEditedButton extends StatelessWidget {
     this.fontsize = 18,
     this.width = 220,
     this.height = 40,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -49,7 +49,7 @@ class _ActionsButtonState extends State<ActionsButton> {
                 height: 24,
                 color: widget.colorSvg,
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Text(
                 widget.text,
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(

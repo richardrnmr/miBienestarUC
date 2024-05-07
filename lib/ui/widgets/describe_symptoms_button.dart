@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mi_bienestar_uc/pages/symptoms_apimedic_page.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
@@ -32,7 +29,7 @@ class DescribeSymptomsButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Stack(
             children: [
-              // SVG en la esquina superior derecha
+              // SVG en la esquina superior izquierda
               Positioned(
                 top: 8,
                 left: 0,
@@ -43,7 +40,7 @@ class DescribeSymptomsButton extends StatelessWidget {
                   color: Color(0xFFD6C731),
                 ),
               ),
-              // Texto alineado a la izquierda
+              // Texto alineado a la derecha
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(

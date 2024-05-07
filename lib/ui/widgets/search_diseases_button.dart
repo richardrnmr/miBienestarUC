@@ -4,6 +4,8 @@ import 'package:mi_bienestar_uc/pages/diseases_page.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
 
 class SearchDiseasesButton extends StatelessWidget {
+  const SearchDiseasesButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -11,7 +13,7 @@ class SearchDiseasesButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DiseasesPage()),
+            MaterialPageRoute(builder: (context) => const DiseasesPage()),
           );
         },
         style: ElevatedButton.styleFrom(
@@ -32,7 +34,7 @@ class SearchDiseasesButton extends StatelessWidget {
                   'assets/medicine_image.svg',
                   cacheColorFilter: true,
                   height: 44,
-                  color: Color(0xFF00A9C2),
+                  color: const Color(0xFF00A9C2),
                 ),
               ),
               // Texto alineado a la izquierda

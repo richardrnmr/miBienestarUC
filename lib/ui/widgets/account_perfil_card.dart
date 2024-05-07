@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
 import 'package:mi_bienestar_uc/models/user_patient.dart';
@@ -6,10 +8,10 @@ import 'package:mi_bienestar_uc/pages/perfil_page.dart';
 class AccountPerfilCard extends StatefulWidget {
   final String userId;
 
-  AccountPerfilCard({
+  const AccountPerfilCard({
     required this.userId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _AccountPerfilCardState createState() => _AccountPerfilCardState();
@@ -60,7 +62,7 @@ class _AccountPerfilCardState extends State<AccountPerfilCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               getProfileIcon(gender),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Text(
                 // Utiliza los datos del usuario para mostrar el saludo
                 userPatient != null
@@ -86,22 +88,22 @@ class _AccountPerfilCardState extends State<AccountPerfilCard> {
   Widget getProfileIcon(String gender) {
     switch (gender) {
       case 'Masculino':
-        return CircleAvatar(
+        return const CircleAvatar(
           radius: 16,
           backgroundImage: AssetImage('assets/man_perfil.png'),
         );
       case 'Femenino':
-        return CircleAvatar(
+        return const CircleAvatar(
           radius: 16,
           backgroundImage: AssetImage('assets/woman_perfil.png'),
         );
       case 'Otro':
-        return CircleAvatar(
+        return const CircleAvatar(
           backgroundColor: Colors.blue,
           radius: 16,
         );
       default:
-        return CircleAvatar(
+        return const CircleAvatar(
           backgroundColor: Colors.blue,
           radius: 16,
         );

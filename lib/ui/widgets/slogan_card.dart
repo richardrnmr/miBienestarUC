@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
 
 class SloganCard extends StatelessWidget {
+  const SloganCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -35,7 +37,7 @@ class SloganCard extends StatelessWidget {
                       ),
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Image.asset(
                 'assets/doctor_image.png', // Ruta de la imagen
                 fit: BoxFit.fitHeight,
