@@ -46,7 +46,7 @@ class LoginPage extends StatelessWidget {
                                 fontSize: 76,
                               ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     Form(
                       key: _formKey,
                       child: Column(
@@ -56,14 +56,14 @@ class LoginPage extends StatelessWidget {
                             controller: emailController,
                             validator: PersonalizedValidators.email,
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           EditedTextFormField(
                             hintText: 'Ingrese contraseña',
                             controller: passwordController,
                             isPassword: true,
                             validator: PersonalizedValidators.password,
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           GlobalEditedButton(
                             color: AppColor.yellowPastelColor,
                             text: 'INGRESAR',

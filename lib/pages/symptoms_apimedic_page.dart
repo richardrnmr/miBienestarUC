@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mi_bienestar_uc/core/helpers/apimedic_helper.dart';
 import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
 import 'package:mi_bienestar_uc/models/diagnosis.dart';
@@ -21,12 +19,12 @@ class SymptomsApimedicPage extends StatefulWidget {
 }
 
 class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   List<Symptom> _symptoms = [];
   String? token;
   UserPatient? userPatient;
   late List<Symptom> _filteredSymptoms = [];
-  late List<Symptom> _selectedSymptoms = [];
+  late final List<Symptom> _selectedSymptoms = [];
   late List<Diagnosis> _diagnoses = [];
 
   @override
@@ -54,14 +52,10 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
   Future<void> _fetchData() async {
     try {
       token = await ApiMedic.getToken();
-      print("este es el token: $token");
       _symptoms = await ApiMedic.fetchSymptoms(token!, 'es-es');
-      print(_symptoms[1].name);
 
       setState(() {});
-    } catch (error) {
-      print("Error al obtener los síntomas: $error");
-    }
+    } catch (error) {}
   }
 
   Future<void> _getResults() async {
@@ -79,6 +73,37 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
     } catch (error) {
       print("Error al obtener el diagnostico: $error");
     }
+  }
+
+  void _showDiagnosisDetails(BuildContext context, Diagnosis diagnosis) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Detalles de diagnóstico'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Nombre: ${diagnosis.issue.name}'),
+              Text('Nombre del profesional: ${diagnosis.issue.profName}'),
+              Text(
+                  'Precisión: ${diagnosis.issue.accuracy.toStringAsFixed(2)}%'),
+              Text('Especializacion: ${diagnosis.specialisations[0].name}'),
+              // Agrega más detalles según tus necesidades
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cerrar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -100,7 +125,7 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                 ),
               ).p24(),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: SearchField<Symptom>(
                   controller: _searchController,
                   hint: 'Busca tus síntomas',
@@ -113,10 +138,10 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.yellow, width: 1),
+                      borderSide: const BorderSide(color: Colors.yellow, width: 1),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   ),
                   maxSuggestionsInViewPort: 6,
                   suggestions: _filteredSymptoms
@@ -168,7 +193,7 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: SingleChildScrollView(
                   child: Wrap(
                     spacing: 8,
@@ -185,7 +210,7 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                           children: [
                             Text(
                               symptom.name,
-                              style: TextStyle(fontSize: 13),
+                              style: const TextStyle(fontSize: 13),
                             ),
                             IconButton(
                               onPressed: () {
@@ -193,7 +218,7 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                                   _selectedSymptoms.remove(symptom);
                                 });
                               },
-                              icon: Icon(Icons.cancel_outlined),
+                              icon: const Icon(Icons.cancel_outlined),
                               iconSize: 20,
                             ),
                           ],
@@ -210,7 +235,7 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                 onPressed: () async {
                   if (userPatient == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text(
                             'Error: No se ha encontrado información del usuario'),
                         backgroundColor: Colors.red,
@@ -222,7 +247,7 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                 },
               ).px24(),
               if (_diagnoses.isEmpty || _diagnoses == [])
-                Text(
+                const Text(
                   'Todavía no hay información relevante',
                   style: TextStyle(fontSize: 16),
                 ).p24()
@@ -240,19 +265,21 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                         elevation: 2,
                         surfaceTintColor: Colors.white,
                         margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                            const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         child: ListTile(
                           title: Text(diagnosis.issue.name),
-                          subtitle: Text('${diagnosis.issue.profName}'),
+                          subtitle: Text(diagnosis.issue.profName),
                           trailing: Text(
-                            '${diagnosis.issue.accuracy.roundToDouble()}%',
+                            '${diagnosis.issue.accuracy.toStringAsFixed(2)}%',
                             style: TextStyle(
                                 color: diagnosis.issue.accuracy > 50
                                     ? Colors.green
                                     : Colors.red,
                                 fontSize: 16),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            _showDiagnosisDetails(context, diagnosis);
+                          },
                         ),
                       );
                     },
@@ -262,24 +289,21 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(30), // Radio para hacerlo redondo
-          ),
-          elevation: 1,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          backgroundColor: AppColor.blackparcialColor,
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(30),
         ),
-      ),
+        elevation: 1,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        backgroundColor: AppColor.blackparcialColor,
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+      ).p16(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }

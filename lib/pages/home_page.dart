@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
 import 'package:mi_bienestar_uc/pages/help_page.dart';
 import 'package:mi_bienestar_uc/pages/report_problem_page.dart';
@@ -37,8 +35,8 @@ class HomePage extends StatelessWidget {
                         FirebaseHelper.signOut(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(12),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(12),
                         backgroundColor: Colors.white,
                         elevation: 2,
                       ),
@@ -50,13 +48,13 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 SloganCard(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     DescribeSymptomsButton(userId: userId),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     SearchDiseasesButton(),
                   ],
                 ),
@@ -84,20 +82,20 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HelpPage(),
+                          builder: (context) => const HelpPage(),
                         ),
                       );
                     },
                     svgPicture: 'help_image.svg',
                     colorSvg: Colors.green,
                     text: 'NÚMEROS DE AYUDA'),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ActionsButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ReportProblemPage()),
+                            builder: (context) => const ReportProblemPage()),
                       );
                     },
                     svgPicture: 'problem_image.svg',

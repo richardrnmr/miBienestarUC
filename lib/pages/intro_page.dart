@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mi_bienestar_uc/pages/login_page.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
 import 'package:mi_bienestar_uc/ui/widgets/global_edited_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -35,7 +35,7 @@ class _IntroPageState extends State<IntroPage> {
           ),
           AnimatedPositioned(
             height: MediaQuery.sizeOf(context).height,
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             top: _isButtonPressed ? -MediaQuery.sizeOf(context).height : 0,
             child: Center(
               child: Column(
@@ -160,23 +160,23 @@ class _IntroPageState extends State<IntroPage> {
                                     fontSize: 14,
                                   ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         GlobalEditedButton(
-                          fontsize: 22,
+                            fontsize: 22,
                             text: '¡EMPIEZA YA!',
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 PageRouteBuilder(
                                   transitionDuration:
-                                      Duration(milliseconds: 500),
+                                      const Duration(milliseconds: 500),
                                   pageBuilder: (_, __, ___) => LoginPage(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     return SlideTransition(
                                       position: Tween<Offset>(
-                                              begin: Offset(1.0, 0.0),
-                                              end: Offset(0.0, 0.0))
+                                              begin: const Offset(1.0, 0.0),
+                                              end: const Offset(0.0, 0.0))
                                           .animate(animation),
                                       child: child,
                                     );
@@ -185,7 +185,7 @@ class _IntroPageState extends State<IntroPage> {
                               );
                             },
                             color: AppColor.yellowPastelColor),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -199,17 +199,14 @@ class _IntroPageState extends State<IntroPage> {
                                 });
                               },
                               style: ElevatedButton.styleFrom(
-                                shape: CircleBorder(), // Botón circular
-                                padding:
-                                    EdgeInsets.all(16), // Padding para el botón
-                                backgroundColor: AppColor
-                                    .blackparcialColor, // Color de fondo negro
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(16),
+                                backgroundColor: AppColor.blackparcialColor,
                               ),
-                              child: Icon(
-                                Icons
-                                    .arrow_downward, // Icono de flecha hacia abajo
-                                color: Colors.white, // Color del icono blanco
-                                size: 24, // Tamaño del icono
+                              child: const Icon(
+                                Icons.arrow_downward,
+                                color: Colors.white,
+                                size: 24,
                               ),
                             ),
                           ],
@@ -236,8 +233,8 @@ class _IntroPageState extends State<IntroPage> {
                     width: MediaQuery.sizeOf(context).width,
                     decoration: BoxDecoration(
                         color: AppColor.yellowPastelColor,
-                        borderRadius:
-                            BorderRadius.only(topRight: Radius.circular(164))),
+                        borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(164))),
                     child: Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: Column(
@@ -314,8 +311,14 @@ class _IntroPageState extends State<IntroPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      // LLevar al numero del lider
-                      print('oaaaa');
+                      void _launchPhone() async {
+                        const url = 'tel:914383788';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'No se pudo lanzar $url';
+                        }
+                      }
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -353,31 +356,31 @@ class _IntroPageState extends State<IntroPage> {
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(16),
+                            shape: const CircleBorder(),
+                            padding: const  EdgeInsets.all(16),
                             backgroundColor: AppColor.blackparcialColor,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.arrow_upward,
                             color: Colors.white,
                             size: 24,
                           ),
                         ),
-                        SizedBox(width: 80),
+                        const SizedBox(width: 80),
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 PageRouteBuilder(
                                   transitionDuration:
-                                      Duration(milliseconds: 500),
+                                      const Duration(milliseconds: 500),
                                   pageBuilder: (_, __, ___) => LoginPage(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     return SlideTransition(
                                       position: Tween<Offset>(
-                                              begin: Offset(1.0, 0.0),
-                                              end: Offset(0.0, 0.0))
+                                              begin: const Offset(1.0, 0.0),
+                                              end: const Offset(0.0, 0.0))
                                           .animate(animation),
                                       child: child,
                                     );
@@ -385,11 +388,11 @@ class _IntroPageState extends State<IntroPage> {
                                 ));
                           },
                           style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(16),
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(16),
                             backgroundColor: AppColor.blackparcialColor,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.check,
                             color: Colors.white,
                             size: 24,

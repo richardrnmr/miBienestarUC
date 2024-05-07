@@ -3,6 +3,7 @@ import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
 import 'package:mi_bienestar_uc/models/hospital.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class HelpPage extends StatelessWidget {
   const HelpPage({Key? key});
@@ -14,15 +15,12 @@ class HelpPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text(
-                'NÚMEROS DE\nAYUDA',
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontSize: 36,
-                    ),
-              ),
-            ),
+            Text(
+              'NÚMEROS DE\nAYUDA',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontSize: 36,
+                  ),
+            ).p24(),
             Expanded(
               child: FutureBuilder<List<Hospital>>(
                 future: FirebaseHelper.getHospitals(),
@@ -57,23 +55,20 @@ class HelpPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          elevation: 1,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          backgroundColor: AppColor.blackparcialColor,
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
-      ),
+        elevation: 1,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        backgroundColor: AppColor.blackparcialColor,
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+      ).p16(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
@@ -83,14 +78,14 @@ class HelpPage extends StatelessWidget {
     return ListTile(
       title: Text(
         nombre,
-        style: TextStyle(fontWeight: FontWeight.w700),
+        style: const TextStyle(fontWeight: FontWeight.w700),
       ),
       subtitle: Text(direccion),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.phone,
               color: Colors.green,
             ),

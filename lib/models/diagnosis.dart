@@ -18,7 +18,7 @@ class Diagnosis {
 class Issue {
   final int id;
   final String name;
-  final double accuracy; // Cambiar de int a double
+  final double accuracy;
   final String icd;
   final String icdName;
   final String profName;
@@ -38,7 +38,7 @@ class Issue {
     return Issue(
       id: json['ID'],
       name: json['Name'],
-      accuracy: json['Accuracy']?.toDouble() ?? 0.0, // Convertir a double
+      accuracy: json['Accuracy']?.toDouble() ?? 0.0,
       icd: json['Icd'],
       icdName: json['IcdName'],
       profName: json['ProfName'],

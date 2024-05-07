@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mi_bienestar_uc/core/helpers/firebase_helper.dart';
 import 'package:mi_bienestar_uc/core/validators.dart';
 import 'package:mi_bienestar_uc/pages/login_page.dart';
@@ -53,7 +51,7 @@ class RegisterPage extends StatelessWidget {
                         ),
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Form(
                   key: _formKey,
                   child: Expanded(
@@ -64,21 +62,21 @@ class RegisterPage extends StatelessWidget {
                           controller: emailController,
                           validator: PersonalizedValidators.email,
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         EditedTextFormField(
                           hintText: 'Ingrese nombre completo',
                           controller: nameController,
                           validator: PersonalizedValidators.text,
                           textInputType: TextInputType.text,
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         EditedTextFormField(
                           hintText: 'Ingrese contraseña',
                           controller: passwordController,
                           isPassword: true,
                           validator: PersonalizedValidators.password,
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         EditedTextFormField(
                           hintText: 'Vuelve a escribir tu contraseña',
                           controller: password2Controller,
@@ -87,7 +85,7 @@ class RegisterPage extends StatelessWidget {
                               PersonalizedValidators.passwordsMatch(
                                   value, passwordController.text),
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -99,7 +97,7 @@ class RegisterPage extends StatelessWidget {
                                 textInputType: TextInputType.number,
                               ),
                             ),
-                            SizedBox(width: 24),
+                            const SizedBox(width: 24),
                             Expanded(
                               child: GenderDropDown(
                                 genderController: genderController,
@@ -108,14 +106,13 @@ class RegisterPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         GlobalEditedButton(
                           color: AppColor.yellowPastelColor,
                           text: 'REGISTRARSE',
                           fontsize: 22,
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              print(genderController);
                               await FirebaseHelper.registerWithEmailAndPassword(
                                 email: emailController.text,
                                 password: passwordController.text,

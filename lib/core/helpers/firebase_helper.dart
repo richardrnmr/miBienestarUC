@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mi_bienestar_uc/models/hospital.dart';
 import 'package:mi_bienestar_uc/models/user_patient.dart';
 import 'package:mi_bienestar_uc/pages/home_page.dart';
@@ -9,6 +8,8 @@ import 'package:mi_bienestar_uc/pages/login_page.dart';
 import 'package:mi_bienestar_uc/ui/widgets/custom_show_dialog.dart';
 
 class FirebaseHelper {
+
+  //autenticacion de Firebase
   static Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -20,7 +21,7 @@ class FirebaseHelper {
         email: email,
         password: password,
       );
-      // Navega a la pantalla HomePage si la autenticación es exitosa
+      // navega a la pantalla HomePage si la autenticación es exitosa
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -29,10 +30,10 @@ class FirebaseHelper {
         (route) => false,
       );
     } catch (e) {
-      // Muestra un cuadro de diálogo con el mensaje de error
-      print('Error de autenticación: $e');
+      // muestra un cuadro de diálogo con el mensaje de error
       showCustomDialog(
         title: 'Error de autenticación',
+        // ignore: use_build_context_synchronously
         context: context,
         message: 'Usuario o contraseña incorrectos',
         onAccept: (){
@@ -42,6 +43,7 @@ class FirebaseHelper {
     }
   }
 
+  // registra usuario en Firebase
   static Future<void> registerWithEmailAndPassword({
     required String email,
     required String password,
@@ -65,6 +67,7 @@ class FirebaseHelper {
         'id': userCredential.user!.uid,
       });
 
+      // muestra cuadro de dialogo con la confirmacion
       showCustomDialog(
         title: 'Confirmación',
         context: context,
@@ -84,43 +87,43 @@ class FirebaseHelper {
       print('Error de registro: $e');
       if (e is FirebaseAuthException) {
         if (e.code == 'email-already-in-use') {
-          // Mostrar un mensaje indicando que el usuario ya está registrado
+          // muestra un mensaje indicando que el usuario ya está registrado
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Error de registro'),
-                content: Text(
+                title: const Text('Error de registro'),
+                content: const Text(
                     'El correo electrónico ya ha sido registrado anteriormente.'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text('Cerrar'),
+                    child: const Text('Cerrar'),
                   ),
                 ],
               );
             },
           );
-          return; // Salir del método después de mostrar el diálogo
+          return; 
         }
       }
 
-      // Mostrar un mensaje de error genérico si no se puede determinar la causa exacta del error
+      // muestra un mensaje de error genérico si no se puede determinar la causa exacta del error
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error de registro'),
-            content: Text(
+            title: const Text('Error de registro'),
+            content: const Text(
                 'Hubo un error durante el registro. Por favor, inténtalo de nuevo más tarde.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('Cerrar'),
+                child: const Text('Cerrar'),
               ),
             ],
           );
@@ -129,12 +132,14 @@ class FirebaseHelper {
     }
   }
 
+  //chequea el usuario de Firebase
   static Future<bool> checkAuth() async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
-    User? user = _auth.currentUser;
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
     return user != null;
   }
 
+  // cierra sesion de Firebase
   static Future<void> signOut(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
@@ -147,17 +152,18 @@ class FirebaseHelper {
     }
   }
 
+  // obtiene datos del usuario de Firestore
   static Future<UserPatient?> getUserData(String id) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     QuerySnapshot querySnapshot = await users.where('id', isEqualTo: id).get();
 
-    // Si no se encuentra ningún documento, devuelve null
+    // si no se encuentra ningún documento, devuelve null
     if (querySnapshot.docs.isEmpty) {
       return null;
     }
 
-    // Si se encuentra un documento, devuelve el primer documento encontrado
+    // si se encuentra un documento, devuelve el primer documento encontrado
     var doc = querySnapshot.docs.first;
 
     return UserPatient(
@@ -171,14 +177,14 @@ class FirebaseHelper {
 
   static Future<List<Hospital>> getHospitals() async {
     try {
-      // Obtener una referencia a la colección 'hospitals'
+      // obtiene una referencia a la colección 'hospitals'
       CollectionReference hospitals =
           FirebaseFirestore.instance.collection('hospitals');
 
-      // Obtener todos los documentos de la colección
+      // obtiene todos los documentos de la colección
       QuerySnapshot querySnapshot = await hospitals.get();
 
-      // Convertir los documentos en objetos Hospital y almacenarlos en una lista
+      // convierte los documentos en objetos Hospital y se almacena en una lista
       List<Hospital> listaHospitales = querySnapshot.docs.map((doc) {
         return Hospital(
           name: doc['name'],
@@ -189,9 +195,8 @@ class FirebaseHelper {
 
       return listaHospitales;
     } catch (e) {
-      // Manejar errores
       print('Error al obtener los hospitales: $e');
-      return []; // Devolver una lista vacía en caso de error
+      return []; 
     }
   }
 
@@ -200,17 +205,16 @@ class FirebaseHelper {
     required String detail,
   }) async {
     try {
-      // Obtener una referencia a la colección 'problems'
+      // obtiene una referencia a la colección 'problems'
       CollectionReference problems =
           FirebaseFirestore.instance.collection('problems');
 
-      // Subir un nuevo documento con los campos reason y detail
+      // sube un documento con los campos reason y detail
       await problems.add({
         'reason': reason,
         'detail': detail,
       });
     } catch (e) {
-      // Manejar errores
       print('Error al subir el problema: $e');
     }
   }

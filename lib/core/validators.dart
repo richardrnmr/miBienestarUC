@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 
 class PersonalizedValidators {
+  
   static String? email(String? value) {
     if (value == null || value.isEmpty) {
       return 'Este campo es requerido';

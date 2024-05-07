@@ -2,6 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:xml/xml.dart' as xml;
 
 class MedlinePlusHelper {
+
+  //busca resultados a consultas de salud y enfermedades
   static Future<List<Map<String, dynamic>>> searchMedlinePlus(
       String term) async {
     final url =
