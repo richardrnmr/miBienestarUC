@@ -92,7 +92,7 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
               FittedBox(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'DESCRIBE TUS\nSÍNTOMAS',
+                  'DESCRIBE\nTUS SÍNTOMAS',
                   style: Theme.of(context)
                       .textTheme
                       .headlineLarge
@@ -137,7 +137,6 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                           .toList();
                     });
                     if (_filteredSymptoms.isNotEmpty) {
-                      // Si hay coincidencias, muestra las sugerencias
                       return _filteredSymptoms
                           .map((symptom) => SearchFieldListItem<Symptom>(
                                 symptom.name,
@@ -145,7 +144,6 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                               ))
                           .toList();
                     } else {
-                      // Si no hay coincidencias, no muestra ninguna sugerencia
                       return [];
                     }
                   },
@@ -223,13 +221,14 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                   _getResults();
                 },
               ).px24(),
-              if (_diagnoses.isEmpty)
+              if (_diagnoses.isEmpty || _diagnoses == [])
                 Text(
-                  'Los valores son muy bajos o la enfermedad es desconocida',
+                  'Todavía no hay información relevante',
                   style: TextStyle(fontSize: 16),
                 ).p24()
               else
                 Container(
+                  height: 360,
                   width: context.screenWidth,
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -248,9 +247,10 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
                           trailing: Text(
                             '${diagnosis.issue.accuracy.roundToDouble()}%',
                             style: TextStyle(
-                              color: diagnosis.issue.accuracy>50 ? Colors.green : Colors.red,
-                              fontSize: 16
-                            ),
+                                color: diagnosis.issue.accuracy > 50
+                                    ? Colors.green
+                                    : Colors.red,
+                                fontSize: 16),
                           ),
                           onTap: () {},
                         ),
@@ -262,6 +262,25 @@ class _SymptomsApimedicPageState extends State<SymptomsApimedicPage> {
           ),
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(30), // Radio para hacerlo redondo
+          ),
+          elevation: 1,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          backgroundColor: AppColor.blackparcialColor,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

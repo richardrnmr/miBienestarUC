@@ -8,7 +8,7 @@ class EditedTextArea extends StatefulWidget {
   final Color colorbside;
   final bool enableText;
   final FocusNode? focusNode;
-  int? minLines = 1;
+  final int? minLines;
 
   EditedTextArea({
     Key? key,
@@ -17,7 +17,7 @@ class EditedTextArea extends StatefulWidget {
     this.controller,
     this.validator,
     this.focusNode,
-    this.minLines,
+    this.minLines = 1,
     required this.colorbside,
     this.textInputType = TextInputType.multiline,
   }) : super(key: key);

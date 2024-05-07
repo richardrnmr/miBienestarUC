@@ -18,8 +18,6 @@ class ApiMedic {
     // Calcula el hash HMAC-MD5
     String uri = 'https://sandbox-authservice.priaid.ch/login';
     String hashedCredentials = _hmacMd5(secretKey, uri);
-
-    // Realiza la solicitud HTTP POST
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -33,7 +31,6 @@ class ApiMedic {
       Map<String, dynamic> data = json.decode(response.body);
       return data['Token'];
     } else {
-      // Si la solicitud falla, muestra el mensaje de error
       print('Error: ${response.body}');
       return null;
     }
@@ -70,8 +67,6 @@ class ApiMedic {
       List<Symptom> symptoms, String gender, int yearOfBirth) async {
     // Mapea la lista de síntomas a una lista de IDs
     final List<int> symptomIds = symptoms.map((symptom) => symptom.id).toList();
-    print(symptomIds);
-
     final Uri uri = Uri.https('sandbox-healthservice.priaid.ch', '/diagnosis', {
       'token': token,
       'symptoms': jsonEncode(symptomIds),
@@ -79,7 +74,6 @@ class ApiMedic {
       'year_of_birth': yearOfBirth.toString(),
       'language': 'es-es',
     });
-    print(uri);
 
     final response = await http.get(uri);
 

@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mi_bienestar_uc/pages/symptoms_page.dart';
+import 'package:mi_bienestar_uc/pages/symptoms_apimedic_page.dart';
 import 'package:mi_bienestar_uc/ui/general/colors.dart';
 
 class DescribeSymptomsButton extends StatelessWidget {
+  final String userId;
+
+  DescribeSymptomsButton({required this.userId});
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -14,7 +18,8 @@ class DescribeSymptomsButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SymptomsPage()),
+            MaterialPageRoute(
+                builder: (context) => SymptomsApimedicPage(userId: userId)),
           );
         },
         style: ElevatedButton.styleFrom(
